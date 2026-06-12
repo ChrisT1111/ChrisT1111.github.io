@@ -11,6 +11,7 @@
     <meta property="og:title" content="Chess Coach: Openings — learn the why behind every move" />
     <meta property="og:description" content="Free chess opening trainer for Android. 11 classic openings, hand-written explanations for every move, fully offline." />
     <meta property="og:url" content="https://christ1111.github.io/chess-coach/" />
+    <meta property="og:image" content="https://christ1111.github.io/chess-coach/img/board-dark.jpg" />
 
     <script type="application/ld+json">
     {
@@ -54,26 +55,27 @@
       .store-badge img { height: 64px; display: block; }
       .store-note { font-size: 0.85rem; color: #888; margin-top: 8px; }
 
-      .board {
-        flex: 0 0 auto;
-        display: grid;
-        grid-template-columns: repeat(8, 38px);
-        grid-template-rows: repeat(8, 38px);
-        border: 6px solid #4a3526;
-        border-radius: 6px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+      .phone {
+        display: block;
+        width: 270px;
+        border-radius: 24px;
+        border: 1px solid rgba(0,0,0,0.15);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.22);
       }
-      .board span {
+      .hero .phone { flex: 0 0 auto; }
+      .shots {
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
+        gap: 24px;
         justify-content: center;
-        font-size: 27px;
-        line-height: 1;
-        user-select: none;
+        padding: 0;
+        margin: 0;
+        list-style: none;
       }
-      .board .l { background: #f0d9b5; }
-      .board .d { background: #b58863; }
-      .board-caption { text-align: center; font-size: 0.85rem; color: #888; margin-top: 10px; }
+      .shots li { text-align: center; }
+      .shots .phone { width: 230px; }
+      .shots figure { margin: 0; }
+      .shots figcaption { font-size: 0.9rem; color: #888; margin-top: 10px; }
 
       h2 { font-size: 1.4rem; margin: 48px 0 16px; font-family: Georgia, "Times New Roman", serif; }
       .features {
@@ -151,27 +153,8 @@
           <p class="store-note">Free · Offline · No account · No subscription</p>
         </div>
 
-        <div>
-          <div class="board" role="img" aria-label="Chessboard showing the Vienna Gambit after 1.e4 e5 2.Nc3 Nf6 3.f4">
-            <!-- rank 8 -->
-            <span class="l">♜</span><span class="d">♞</span><span class="l">♝</span><span class="d">♛</span><span class="l">♚</span><span class="d">♝</span><span class="l"></span><span class="d">♜</span>
-            <!-- rank 7 -->
-            <span class="d">♟</span><span class="l">♟</span><span class="d">♟</span><span class="l">♟</span><span class="d"></span><span class="l">♟</span><span class="d">♟</span><span class="l">♟</span>
-            <!-- rank 6 -->
-            <span class="l"></span><span class="d"></span><span class="l"></span><span class="d"></span><span class="l"></span><span class="d">♞</span><span class="l"></span><span class="d"></span>
-            <!-- rank 5 -->
-            <span class="d"></span><span class="l"></span><span class="d"></span><span class="l"></span><span class="d">♟</span><span class="l"></span><span class="d"></span><span class="l"></span>
-            <!-- rank 4 -->
-            <span class="l"></span><span class="d"></span><span class="l"></span><span class="d"></span><span class="l">♙</span><span class="d">♙</span><span class="l"></span><span class="d"></span>
-            <!-- rank 3 -->
-            <span class="d"></span><span class="l"></span><span class="d">♘</span><span class="l"></span><span class="d"></span><span class="l"></span><span class="d"></span><span class="l"></span>
-            <!-- rank 2 -->
-            <span class="l">♙</span><span class="d">♙</span><span class="l">♙</span><span class="d">♙</span><span class="l"></span><span class="d"></span><span class="l">♙</span><span class="d">♙</span>
-            <!-- rank 1 -->
-            <span class="d">♖</span><span class="l"></span><span class="d">♗</span><span class="l">♕</span><span class="d">♔</span><span class="l">♗</span><span class="d">♘</span><span class="l">♖</span>
-          </div>
-          <p class="board-caption">The Vienna Gambit — one of the 11 openings you can train.</p>
-        </div>
+        <img class="phone" src="img/board-dark.jpg" width="540" height="840"
+             alt="Chess Coach training screen: the Queen's Gambit on the board with an explanation of 2.c4 below it" />
       </header>
 
       <h2>Why this trainer is different</h2>
@@ -182,6 +165,25 @@
         <li><b>Main lines and sidelines</b><p>Train the main line or branch into named variations — and switch lines mid-session when you find a move from another book line.</p></li>
         <li><b>Fully offline &amp; private</b><p>No account, no sign-up, no tracking dashboard. Train on the plane, on the train, anywhere.</p></li>
         <li><b>No subscription, ever</b><p>Free to play with a daily refill. One single one-time purchase unlocks unlimited training and removes all ads forever.</p></li>
+      </ul>
+
+      <h2>See it in action</h2>
+      <ul class="shots">
+        <li><figure>
+          <img class="phone" loading="lazy" src="img/feedback-dark.jpg" width="540" height="840"
+               alt="Feedback cards in the Sicilian Defence: the correct move c5 with its explanation, and the opponent's reply" />
+          <figcaption>Every move graded — with the why</figcaption>
+        </figure></li>
+        <li><figure>
+          <img class="phone" loading="lazy" src="img/home-dark.jpg" width="540" height="840"
+               alt="Home screen listing openings such as the Italian Game and Ruy Lopez, each trainable as White or Black" />
+          <figcaption>Pick an opening, pick a side</figcaption>
+        </figure></li>
+        <li><figure>
+          <img class="phone" loading="lazy" src="img/board-light.jpg" width="540" height="840"
+               alt="The same Queen's Gambit training screen in the light theme" />
+          <figcaption>Light and dark themes</figcaption>
+        </figure></li>
       </ul>
 
       <h2>11 classic openings</h2>
