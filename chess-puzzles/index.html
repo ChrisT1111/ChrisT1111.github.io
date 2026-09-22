@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chess Coach: Puzzles — Offline Chess Tactics Trainer for Android</title>
+    <meta name="description" content="A chess tactics trainer for Android with 100,000 puzzles built in. Puzzles picked for your rating, 29 tactical motifs, a daily puzzle and real stats. Fully offline, no account, no subscription." />
+    <link rel="canonical" href="https://christ1111.github.io/chess-puzzles/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Chess Coach: Puzzles — 100,000 chess puzzles, fully offline" />
+    <meta property="og:description" content="A tactics trainer for Android. Puzzles picked for your rating, 29 motifs to drill, a daily puzzle, and stats that show which tactic you keep missing." />
+    <meta property="og:url" content="https://christ1111.github.io/chess-puzzles/" />
+    <meta property="og:image" content="https://christ1111.github.io/chess-puzzles/img/board-dark.jpg" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Chess Coach: Puzzles",
+      "operatingSystem": "ANDROID",
+      "applicationCategory": "GameApplication",
+      "description": "A chess tactics trainer with 100,000 puzzles from real games, all stored inside the app. Puzzles are picked for your rating, 29 tactical motifs can be drilled one at a time, and a daily puzzle is the same for everyone.",
+      "url": "https://christ1111.github.io/chess-puzzles/",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.driftspark.labs.chesspuzzles",
+      "author": { "@type": "Organization", "name": "Driftspark Labs", "url": "https://christ1111.github.io/" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+    }
+    </script>
+
+    <style>
+      :root { color-scheme: light dark; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        color: #222;
+        background: #fafafa;
+      }
+      .wrap { max-width: 880px; margin: 0 auto; padding: 56px 24px; }
+      header.hero {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 56px;
+      }
+      .hero-copy { flex: 1 1 360px; }
+      .crumb { font-size: 0.9rem; margin: 0 0 24px; }
+      .crumb a { color: #888; }
+      h1 { font-size: 2.4rem; line-height: 1.15; margin: 0 0 12px; font-family: Georgia, "Times New Roman", serif; }
+      .pitch { font-size: 1.2rem; color: #555; margin: 0 0 24px; }
+      .store-badge img { height: 64px; display: block; }
+      .store-note { font-size: 0.85rem; color: #888; margin-top: 8px; }
+
+      .phone {
+        display: block;
+        width: 270px;
+        height: auto;
+        border-radius: 24px;
+        border: 1px solid rgba(0,0,0,0.15);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+      }
+      .hero .phone { flex: 0 0 auto; }
+      .shots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .shots li { text-align: center; }
+      .shots .phone { width: 230px; }
+      .shots figure { margin: 0; }
+      .shots figcaption { font-size: 0.9rem; color: #888; margin-top: 10px; }
+
+      h2 { font-size: 1.4rem; margin: 48px 0 16px; font-family: Georgia, "Times New Roman", serif; }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .features li {
+        border: 1px solid #e3e3e3;
+        border-radius: 12px;
+        padding: 18px 20px;
+        background: #fff;
+      }
+      .features b { display: block; margin-bottom: 4px; }
+      .features p { margin: 0; color: #555; font-size: 0.95rem; }
+
+      .motifs { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+      .motifs li {
+        border: 1px solid #e3e3e3;
+        background: #fff;
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 0.95rem;
+        color: #444;
+      }
+      .group-label { font-size: 0.95rem; color: #888; margin: 24px 0 8px; }
+
+      .cta {
+        margin-top: 56px;
+        text-align: center;
+        border: 1px solid #e3e3e3;
+        border-radius: 16px;
+        background: #fff;
+        padding: 40px 24px;
+      }
+      .cta p { color: #555; max-width: 480px; margin: 8px auto 24px; }
+      .cta .store-badge img { margin: 0 auto; }
+
+      a { color: #1559c4; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      footer { margin-top: 56px; color: #888; font-size: 0.9rem; }
+      footer a { color: #888; text-decoration: underline; }
+
+      @media (prefers-color-scheme: dark) {
+        body { color: #e8e8e8; background: #141414; }
+        .features li, .cta { background: #1d1d1d; border-color: #2a2a2a; }
+        .motifs li { background: #1d1d1d; border-color: #2a2a2a; color: #ccc; }
+        .features p, .pitch, .cta p { color: #aaa; }
+        a { color: #6aa9ff; }
+      }
+      @media (max-width: 480px) {
+        h1 { font-size: 1.9rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <p class="crumb"><a href="../">Driftspark Labs</a> / Chess Coach: Puzzles</p>
+
+      <header class="hero">
+        <div class="hero-copy">
+          <h1>100,000 chess puzzles, <em>all</em> on your phone</h1>
+          <p class="pitch">
+            Chess Coach: Puzzles is a tactics trainer for Android. Every
+            puzzle is a position from a real game, the puzzles you get match
+            your rating, and the whole set is inside the app — no account, no
+            connection needed.
+          </p>
+          <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.driftspark.labs.chesspuzzles">
+            <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
+          </a>
+          <p class="store-note">Free · Offline · No account · No subscription</p>
+        </div>
+
+        <img class="phone" src="img/board-dark.jpg" width="540" height="960"
+             alt="A puzzle in progress: a board in the dark theme with the prompt to play as White, a hint button and the player's rating and streak in the bar above" />
+      </header>
+
+      <h2>How it trains you</h2>
+      <ul class="features">
+        <li><b>Puzzles at your level</b><p>You answer one question when you start: how much chess have you played? After that your rating does the work — solve a hard one and it climbs, miss an easy one and it drops, and the puzzles follow.</p></li>
+        <li><b>Real positions, real lines</b><p>Every puzzle comes from a played game. The opponent moves first, then you find the line that works — move by move, not one clever move and done.</p></li>
+        <li><b>Mistakes come back</b><p>Miss a puzzle and it goes on your review list, so the tactic you did not see gets a second attempt later instead of disappearing.</p></li>
+        <li><b>A daily puzzle</b><p>One puzzle a day, the same one for every player. Train on any day and your day streak grows; only skipping a whole day breaks it.</p></li>
+        <li><b>Fully offline &amp; private</b><p>All 100,000 puzzles ship inside the app. Your rating, stats and history stay on your device — there is no server of ours for them to go to.</p></li>
+        <li><b>No subscription, ever</b><p>Free to play with kings as your training lives. They refill on their own, and a single one-time purchase unlocks unlimited play and removes every ad.</p></li>
+      </ul>
+
+      <h2>See it in action</h2>
+      <ul class="shots">
+        <li><figure>
+          <img class="phone" loading="lazy" src="img/home-dark.jpg" width="540" height="960"
+               alt="Home screen showing rating, day streak and puzzles solved, above entries for solving puzzles, the daily puzzle, reviewing mistakes and practising by theme" />
+          <figcaption>Your rating, your streak, your mistakes</figcaption>
+        </figure></li>
+        <li><figure>
+          <img class="phone" loading="lazy" src="img/themes-dark.jpg" width="540" height="960"
+               alt="The practice-by-theme list showing tactical motifs such as fork, pin, skewer and discovered attack, each with its number of puzzles" />
+          <figcaption>Drill one motif at a time</figcaption>
+        </figure></li>
+        <li><figure>
+          <img class="phone" loading="lazy" src="img/board-light.jpg" width="540" height="960"
+               alt="The same solve screen in the light theme with a board flipped for Black" />
+          <figcaption>Light and dark, seven board palettes</figcaption>
+        </figure></li>
+      </ul>
+
+      <h2>29 motifs to drill</h2>
+      <p class="group-label">Mates and king attacks</p>
+      <ul class="motifs">
+        <li>Mate</li>
+        <li>Back-rank mate</li>
+        <li>Double check</li>
+        <li>Kingside attack</li>
+        <li>Queenside attack</li>
+        <li>Exposed king</li>
+      </ul>
+      <p class="group-label">Tactics</p>
+      <ul class="motifs">
+        <li>Fork</li>
+        <li>Pin</li>
+        <li>Skewer</li>
+        <li>Discovered attack</li>
+        <li>Discovered check</li>
+        <li>Deflection</li>
+        <li>Attraction</li>
+        <li>Sacrifice</li>
+        <li>Clearance</li>
+        <li>In-between move</li>
+        <li>Capture the defender</li>
+        <li>Hanging piece</li>
+        <li>Trapped piece</li>
+        <li>Quiet move</li>
+        <li>Defensive move</li>
+        <li>Zugzwang</li>
+      </ul>
+      <p class="group-label">Pawn play and endgames</p>
+      <ul class="motifs">
+        <li>Advanced pawn</li>
+        <li>Promotion</li>
+        <li>Rook endgame</li>
+        <li>Pawn endgame</li>
+        <li>Bishop endgame</li>
+        <li>Knight endgame</li>
+        <li>Queen endgame</li>
+      </ul>
+
+      <h2>Stats that tell you something</h2>
+      <p>
+        Your rating over time, how many puzzles you attempted and how many you
+        got right, how long you take, your best streaks — and accuracy per
+        motif, which is the one that earns its place: it shows at a glance
+        that your pins are fine and your deflections are not.
+      </p>
+
+      <div class="cta">
+        <h2 style="margin-top:0">Ten minutes of tactics a day</h2>
+        <p>Beats an hour of watching someone else play. Pick up where your rating sits and start solving.</p>
+        <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.driftspark.labs.chesspuzzles">
+          <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
+        </a>
+      </div>
+
+      <footer>
+        <p>
+          &copy; Driftspark Labs ·
+          <a href="mailto:driftspark.labs.app@gmail.com">Support &amp; feedback</a> ·
+          <a href="https://christ1111.github.io/driftspark-legal/chess-puzzles-privacy.html">Privacy policy</a>
+        </p>
+        <p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
+      </footer>
+    </main>
+  </body>
+</html>
