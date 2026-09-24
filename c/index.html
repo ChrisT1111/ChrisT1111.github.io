@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chess puzzle challenge</title>
+    <!-- One page per link would need a server; this one reads ?p= and ?t=
+         from the URL instead. Not worth indexing: every URL is a variant. -->
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="A friend challenged you to a chess puzzle. Tap to play it in Chess Coach: Puzzles." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Chess puzzle challenge" />
+    <meta property="og:description" content="A friend challenged you to a chess puzzle. Can you solve it?" />
+    <meta property="og:image" content="https://christ1111.github.io/chess-puzzles/img/board-dark.jpg" />
+    <link rel="icon" href="icon.png" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #1a1410;
+        --text: #f3eadf;
+        --muted: #b9a993;
+        --accent: #d9a86c;
+        --accent-text: #1a1410;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body {
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      main {
+        width: 100%;
+        max-width: 420px;
+        padding: 40px 20px;
+        text-align: center;
+      }
+      .icon {
+        width: 96px;
+        height: 96px;
+        border-radius: 22px;
+        display: block;
+        margin: 0 auto 24px;
+      }
+      h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.9rem;
+        line-height: 1.2;
+        margin: 0 0 12px;
+      }
+      .time {
+        display: inline-block;
+        margin: 4px 0 20px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(217, 168, 108, 0.16);
+        color: var(--accent);
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      .time[hidden] { display: none; }
+      .play {
+        display: block;
+        width: 100%;
+        padding: 16px 20px;
+        border-radius: 14px;
+        background: var(--accent);
+        color: var(--accent-text);
+        font-size: 1.15rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .play:active { transform: scale(0.98); }
+      .how { color: var(--muted); font-size: 0.95rem; margin: 16px 0 0; }
+      .other { color: var(--muted); font-size: 0.9rem; margin-top: 28px; }
+      .other a { color: var(--muted); }
+      .other[hidden] { display: none; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img class="icon" src="icon.png" alt="" width="96" height="96" />
+      <h1 id="title">A friend challenged you to a chess puzzle</h1>
+      <div class="time" id="time" hidden></div>
+      <a class="play" id="play" href="https://play.google.com/store/apps/details?id=com.driftspark.labs.chesspuzzles">Play the puzzle</a>
+      <p class="how" id="how">Opens in Chess Coach: Puzzles. Don't have it yet? Google Play opens, and the puzzle is waiting when you start the app. Free, and it works offline.</p>
+      <p class="other" id="other" hidden>Chess Coach: Puzzles is an Android app. Open this link on an Android phone to play the puzzle.</p>
+    </main>
+    <script>
+      // Keep in step with lib/core/challenge/challenge.dart: the same p/t
+      // parameters, the same validation, the same m:ss format.
+      // The friend reads this, not the sender, so it follows the browser's
+      // language. Same 14 languages as the app; Traditional Chinese for
+      // zh-TW/HK/MO and zh-Hant, Simplified for the rest of zh.
+      var STRINGS = {
+        "en": {
+          "title": "A friend challenged you to a chess puzzle",
+          "time": "Time to beat: {t}",
+          "play": "Play the puzzle",
+          "how": "Opens in Chess Coach: Puzzles. Don't have it yet? Google Play opens, and the puzzle is waiting when you start the app. Free, and it works offline.",
+          "other": "Chess Coach: Puzzles is an Android app. Open this link on an Android phone to play the puzzle."
+        },
+        "nl": {
+          "title": "Een vriend daagt je uit voor een schaakpuzzel",
+          "time": "Te verslaan: {t}",
+          "play": "Speel de puzzel",
+          "how": "Opent in Chess Coach: Puzzles. Heb je de app nog niet? Dan opent Google Play, en de puzzel staat klaar zodra je de app start. Gratis, en werkt offline.",
+          "other": "Chess Coach: Puzzles is een Android-app. Open deze link op een Android-telefoon om de puzzel te spelen."
+        },
+        "de": {
+          "title": "Jemand fordert dich zu einer Schachaufgabe heraus",
+          "time": "Zu schlagen: {t}",
+          "play": "Aufgabe spielen",
+          "how": "Öffnet sich in Chess Coach: Puzzles. Noch nicht installiert? Dann öffnet sich Google Play, und die Aufgabe wartet, sobald du die App startest. Kostenlos und offline nutzbar.",
+          "other": "Chess Coach: Puzzles ist eine Android-App. Öffne diesen Link auf einem Android-Handy, um die Aufgabe zu spielen."
+        },
+        "es": {
+          "title": "Un amigo te reta con un ejercicio de ajedrez",
+          "time": "Tiempo a superar: {t}",
+          "play": "Jugar el ejercicio",
+          "how": "Se abre en Chess Coach: Puzzles. ¿Aún no la tienes? Se abrirá Google Play y el ejercicio te estará esperando al abrir la app. Gratis y funciona sin conexión.",
+          "other": "Chess Coach: Puzzles es una app para Android. Abre este enlace en un móvil Android para jugar el ejercicio."
+        },
+        "fr": {
+          "title": "Un ami te défie sur un exercice d'échecs",
+          "time": "À battre : {t}",
+          "play": "Jouer l'exercice",
+          "how": "S'ouvre dans Chess Coach: Puzzles. Pas encore installée ? Google Play s'ouvre, et l'exercice t'attend au lancement de l'appli. Gratuite, et elle fonctionne hors ligne.",
+          "other": "Chess Coach: Puzzles est une appli Android. Ouvre ce lien sur un téléphone Android pour jouer l'exercice."
+        },
+        "pt": {
+          "title": "Um amigo te desafiou com um exercício de xadrez",
+          "time": "Tempo a bater: {t}",
+          "play": "Jogar o exercício",
+          "how": "Abre no Chess Coach: Puzzles. Ainda não tem? O Google Play abre, e o exercício estará esperando quando você abrir o app. Grátis e funciona offline.",
+          "other": "Chess Coach: Puzzles é um app para Android. Abra este link em um celular Android para jogar o exercício."
+        },
+        "ru": {
+          "title": "Друг бросил тебе вызов — шахматная задача",
+          "time": "Побей время: {t}",
+          "play": "Решить задачу",
+          "how": "Откроется в Chess Coach: Puzzles. Ещё не установлено? Откроется Google Play, а задача будет ждать при первом запуске. Бесплатно и работает без интернета.",
+          "other": "Chess Coach: Puzzles — приложение для Android. Открой эту ссылку на Android-телефоне, чтобы решить задачу."
+        },
+        "tr": {
+          "title": "Bir arkadaşın sana bir satranç problemiyle meydan okudu",
+          "time": "Hedef süre: {t}",
+          "play": "Problemi çöz",
+          "how": "Chess Coach: Puzzles'da açılır. Henüz yüklü değil mi? Google Play açılır ve uygulamayı başlattığında problem seni bekler. Ücretsiz ve çevrimdışı çalışır.",
+          "other": "Chess Coach: Puzzles bir Android uygulamasıdır. Problemi çözmek için bu bağlantıyı bir Android telefonda aç."
+        },
+        "vi": {
+          "title": "Một người bạn thách bạn giải một bài tập cờ vua",
+          "time": "Thời gian cần vượt: {t}",
+          "play": "Giải bài tập",
+          "how": "Mở trong Chess Coach: Puzzles. Chưa có ứng dụng? Google Play sẽ mở ra, và bài tập sẽ chờ sẵn khi bạn mở ứng dụng. Miễn phí và dùng được khi không có mạng.",
+          "other": "Chess Coach: Puzzles là ứng dụng Android. Hãy mở đường liên kết này trên điện thoại Android để giải bài tập."
+        },
+        "id": {
+          "title": "Temanmu menantangmu dengan teka-teki catur",
+          "time": "Waktu yang harus dikalahkan: {t}",
+          "play": "Mainkan teka-tekinya",
+          "how": "Terbuka di Chess Coach: Puzzles. Belum punya? Google Play akan terbuka, dan teka-tekinya sudah menunggu saat kamu membuka aplikasi. Gratis dan bisa dipakai offline.",
+          "other": "Chess Coach: Puzzles adalah aplikasi Android. Buka tautan ini di ponsel Android untuk memainkan teka-tekinya."
+        },
+        "hi": {
+          "title": "एक दोस्त ने आपको शतरंज की पहेली की चुनौती दी है",
+          "time": "लक्ष्य समय: {t}",
+          "play": "पहेली खेलें",
+          "how": "Chess Coach: Puzzles में खुलेगी। ऐप अभी नहीं है? Google Play खुलेगा, और ऐप शुरू करते ही पहेली आपका इंतज़ार कर रही होगी। मुफ़्त, और ऑफ़लाइन चलता है।",
+          "other": "Chess Coach: Puzzles एक Android ऐप है। पहेली खेलने के लिए यह लिंक किसी Android फ़ोन पर खोलें।"
+        },
+        "fa": {
+          "title": "یک دوست تو را به حل یک معمای شطرنج دعوت کرده",
+          "time": "زمان برای شکستن: {t}",
+          "play": "معما را حل کن",
+          "how": "در Chess Coach: Puzzles باز می‌شود. هنوز نصبش نکرده‌ای؟ Google Play باز می‌شود و وقتی برنامه را باز کنی، معما منتظرت است. رایگان است و آفلاین کار می‌کند.",
+          "other": "Chess Coach: Puzzles یک برنامهٔ اندروید است. برای حل معما، این لینک را روی یک گوشی اندروید باز کن."
+        },
+        "zh": {
+          "title": "好友向你发起了一道国际象棋习题挑战",
+          "time": "目标用时：{t}",
+          "play": "开始解题",
+          "how": "将在 Chess Coach: Puzzles 中打开。还没有安装？会打开 Google Play，安装后启动应用，这道题就在等你。免费，离线也能用。",
+          "other": "Chess Coach: Puzzles 是 Android 应用。请在 Android 手机上打开此链接来解题。"
+        },
+        "zh-Hant": {
+          "title": "好友向你發起了一道西洋棋習題挑戰",
+          "time": "目標用時：{t}",
+          "play": "開始解題",
+          "how": "將在 Chess Coach: Puzzles 中開啟。還沒有安裝？會開啟 Google Play，安裝後啟動應用程式，這道題就在等你。免費，離線也能用。",
+          "other": "Chess Coach: Puzzles 是 Android 應用程式。請在 Android 手機上開啟此連結來解題。"
+        }
+      };
+      function pickLanguage() {
+        var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+        for (var i = 0; i < langs.length; i++) {
+          var tag = String(langs[i]).toLowerCase();
+          if (tag.indexOf("zh") === 0) {
+            return /hant|-tw|-hk|-mo/.test(tag) ? "zh-Hant" : "zh";
+          }
+          var base = tag.split("-")[0];
+          if (STRINGS[base]) return base;
+        }
+        return "en";
+      }
+      (function () {
+        var PACKAGE = "com.driftspark.labs.chesspuzzles";
+        var lang = pickLanguage();
+        var L = STRINGS[lang];
+        document.documentElement.lang = lang;
+        if (lang === "fa") document.documentElement.dir = "rtl";
+        document.title = L.title;
+        document.getElementById("title").textContent = L.title;
+        document.getElementById("play").textContent = L.play;
+        document.getElementById("how").textContent = L.how;
+        document.getElementById("other").textContent = L.other;
+        var params = new URLSearchParams(location.search);
+        var id = params.get("p") || "";
+        if (!/^[0-9A-Za-z]{5}$/.test(id)) id = "";
+        var t = parseInt(params.get("t") || "", 10);
+        var hasTime = t > 0 && t <= 3600;
+
+        var query = id ? "p=" + id + (hasTime ? "&t=" + t : "") : "";
+
+        if (hasTime) {
+          var time = document.getElementById("time");
+          time.textContent = L.time.replace("{t}", Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"));
+          time.hidden = false;
+        }
+
+        // Play hands the referrer to the app on its first launch, which is how
+        // a fresh install opens straight on this puzzle.
+        var store = "https://play.google.com/store/apps/details?id=" + PACKAGE +
+          (query ? "&referrer=" + encodeURIComponent(query) : "");
+
+        var play = document.getElementById("play");
+        var android = /Android/i.test(navigator.userAgent);
+        if (!android) {
+          play.href = store;
+          document.getElementById("other").hidden = false;
+          return;
+        }
+        // Chrome's intent:// form: opens the app when it is installed, and
+        // otherwise goes to browser_fallback_url, which is the store page with
+        // the referrer. Uses the app's own scheme rather than https, so it
+        // does not depend on App Links verification — this page is only ever
+        // seen when that verification did not take the link straight to the
+        // app.
+        play.href = "intent://open/c" + (query ? "?" + query : "") +
+          "#Intent;scheme=chesspuzzles;package=" + PACKAGE +
+          ";S.browser_fallback_url=" + encodeURIComponent(store) + ";end";
+      })();
+    </script>
+  </body>
+</html>

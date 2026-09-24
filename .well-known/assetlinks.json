@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.driftspark.labs.chesspuzzles",
+      "sha256_cert_fingerprints": [
+        "88:6A:AB:A8:C3:72:84:9A:28:A5:D0:CA:6F:A1:F7:F1:75:B0:B9:3C:F6:15:B3:BA:3E:62:51:7E:93:26:B8:07",
+        "23:4E:D6:44:86:C1:FB:1B:96:E5:EC:CA:75:BE:AC:27:1B:A8:E6:E9:5C:7E:F4:2C:EA:82:53:55:83:31:FF:80",
+        "52:F6:94:DA:7A:D0:B6:02:0A:23:B2:81:E6:A6:7B:89:A6:1D:D1:AE:B1:A1:83:0F:8F:49:12:2E:59:BE:F3:64"
+      ]
+    }
+  }
+]
