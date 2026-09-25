@@ -95,7 +95,7 @@
       // Keep in step with lib/core/challenge/challenge.dart: the same p/t
       // parameters, the same validation, the same m:ss format.
       // The friend reads this, not the sender, so it follows the browser's
-      // language. Same 14 languages as the app; Traditional Chinese for
+      // language. Same 15 languages as the app; Traditional Chinese for
       // zh-TW/HK/MO and zh-Hant, Simplified for the rest of zh.
       var STRINGS = {
         "en": {
@@ -182,6 +182,13 @@
           "how": "در Chess Coach: Puzzles باز می‌شود. هنوز نصبش نکرده‌ای؟ Google Play باز می‌شود و وقتی برنامه را باز کنی، معما منتظرت است. رایگان است و آفلاین کار می‌کند.",
           "other": "Chess Coach: Puzzles یک برنامهٔ اندروید است. برای حل معما، این لینک را روی یک گوشی اندروید باز کن."
         },
+        "ar": {
+          "title": "تحدّاك صديق في لغز شطرنج",
+          "time": "الهدف: {t}",
+          "play": "حلّ اللغز",
+          "how": "يُفتح اللغز في تطبيق Chess Coach: Puzzles. ليس لديك التطبيق بعد؟ سيُفتح Google Play، وسيكون اللغز بانتظارك عند تشغيل التطبيق. التطبيق مجاني ويعمل دون اتصال بالإنترنت.",
+          "other": "Chess Coach: Puzzles هو تطبيق لنظام Android. افتح هذا الرابط على هاتف Android لحلّ اللغز."
+        },
         "zh": {
           "title": "好友向你发起了一道国际象棋习题挑战",
           "time": "目标用时：{t}",
@@ -214,7 +221,7 @@
         var lang = pickLanguage();
         var L = STRINGS[lang];
         document.documentElement.lang = lang;
-        if (lang === "fa") document.documentElement.dir = "rtl";
+        if (lang === "fa" || lang === "ar") document.documentElement.dir = "rtl";
         document.title = L.title;
         document.getElementById("title").textContent = L.title;
         document.getElementById("play").textContent = L.play;
